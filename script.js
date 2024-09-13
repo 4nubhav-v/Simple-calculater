@@ -1,6 +1,6 @@
 let currentInput = "";
-let display = document.querySelector("input");
-let buttons = document.querySelectorAll("button");
+let display = document.querySelector(".textholder");
+let buttons = document.querySelectorAll(".btn");
 function calculate() {
   try {
     currentInput = eval(currentInput).toString();
@@ -24,4 +24,30 @@ buttons.forEach((button) => {
     display.value = currentInput || "0";
   });
 });
-console.log(eval("1+2-4"));
+const ch = document.getElementById("checkbox");
+const bg = document.querySelector(".background");
+const calculator = document.querySelector(".calculator");
+const textInput = document.querySelector(".textholder");
+const l = document.getElementById("laybel");
+console.log(l.style);
+ch.addEventListener("change", function () {
+  if (ch.checked) {
+    bg.style.backgroundColor = "#fff";
+    calculator.style.color = "#000";
+    textInput.style.color = "#000";
+    l.innerHTML = "Dark Mode";
+    l.style.color = "#000";
+    buttons.forEach((button) => {
+      button.style.color = "#000";
+    });
+  } else {
+    bg.style.backgroundColor = "#000";
+    calculator.style.color = "#fff";
+    textInput.style.color = "#fff";
+    l.innerHTML = "Light Mode";
+    l.style.color = "#fff";
+    buttons.forEach((button) => {
+      button.style.color = "#fff";
+    });
+  }
+});
