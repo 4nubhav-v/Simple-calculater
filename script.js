@@ -1,53 +1,77 @@
 let currentInput = "";
-let display = document.querySelector(".textholder");
-let buttons = document.querySelectorAll(".btn");
+const display = document.querySelector(".textholder");
+const buttons = document.querySelectorAll(".btn");
+
+// Function to evaluate the current input expression
 function calculate() {
   try {
     currentInput = eval(currentInput).toString();
   } catch {
     currentInput = "Error";
   }
+  updateDisplay();
+}
+
+// Function to update the display
+function updateDisplay() {
   display.value = currentInput || "0";
 }
+
+// Function to handle button click events
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     const value = button.innerText;
+
     if (value === "AC") {
-      currentInput = "";
+      currentInput = ""; // Clear input
     } else if (value === "DEL") {
-      currentInput = currentInput.slice(0, -1);
+      currentInput = currentInput.slice(0, -1); // Delete last character
     } else if (value === "=") {
-      calculate();
+      calculate(); // Calculate the result
+    } else if (value === "%") {
+      handlePercentage(); // Handle percentage conversion
     } else {
-      currentInput += value;
+      currentInput += value; // Add input to expression
     }
-    display.value = currentInput || "0";
+
+    updateDisplay(); // Update the display after every input
   });
 });
-const ch = document.getElementById("checkbox");
-const bg = document.querySelector(".background");
-const calculator = document.querySelector(".calculator");
-const textInput = document.querySelector(".textholder");
-const l = document.getElementById("laybel");
-console.log(l.style);
-ch.addEventListener("change", function () {
-  if (ch.checked) {
-    bg.style.backgroundColor = "#fff";
-    calculator.style.color = "#000";
-    textInput.style.color = "#000";
-    l.innerHTML = "Dark Mode";
-    l.style.color = "#000";
-    buttons.forEach((button) => {
-      button.style.color = "#000";
-    });
-  } else {
-    bg.style.backgroundColor = "#000";
-    calculator.style.color = "#fff";
-    textInput.style.color = "#fff";
-    l.innerHTML = "Light Mode";
-    l.style.color = "#fff";
-    buttons.forEach((button) => {
-      button.style.color = "#fff";
-    });
+
+// Function to handle percentage calculation
+function handlePercentage() {
+  let lastNumMatch = currentInput.match(/(\d+(\.\d+)?)(?!.*\d)/); // Match last number
+  if (lastNumMatch) {
+    let lastNum = lastNumMatch[0];
+    let start = currentInput.lastIndexOf(lastNum);
+    let percentageValue = (parseFloat(lastNum) / 100).toString();
+    currentInput = currentInput.slice(0, start) + percentageValue; // Replace last number with percentage
   }
+}
+
+// Dark/Light mode toggle functionality
+const checkbox = document.getElementById("checkbox");
+const elementsToStyle = {
+  bg: document.querySelector(".background"),
+  calculator: document.querySelector(".calculator"),
+  textInput: document.querySelector(".textholder"),
+  label: document.getElementById("laybel"),
+  buttons: document.querySelectorAll(".btn"),
+};
+
+checkbox.addEventListener("change", () => {
+  const isDarkMode = checkbox.checked;
+  const color = isDarkMode ? "#000" : "#fff";
+  const bgColor = isDarkMode ? "#fff" : "#000";
+  const modeLabel = isDarkMode ? "Dark Mode" : "Light Mode";
+
+  // Apply color changes to the elements
+  elementsToStyle.bg.style.backgroundColor = bgColor;
+  elementsToStyle.calculator.style.color = color;
+  elementsToStyle.textInput.style.color = color;
+  elementsToStyle.label.style.color = color;
+  elementsToStyle.label.innerText = modeLabel;
+  elementsToStyle.buttons.forEach((button) => {
+    button.style.color = color;
+  });
 });
