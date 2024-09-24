@@ -23,22 +23,21 @@ buttons.forEach((button) => {
     const value = button.innerText;
 
     if (value === "AC") {
-      currentInput = ""; // Clear input
+      currentInput = ""; 
     } else if (value === "DEL") {
-      currentInput = currentInput.slice(0, -1); // Delete last character
+      currentInput = currentInput.slice(0, -1); 
     } else if (value === "=") {
-      calculate(); // Calculate the result
+      calculate(); 
     } else if (value === "%") {
-      handlePercentage(); // Handle percentage conversion
+      handlePercentage(); 
     } else {
-      currentInput += value; // Add input to expression
+      currentInput += value;
     }
 
-    updateDisplay(); // Update the display after every input
+    updateDisplay(); 
   });
 });
 
-// Function to handle percentage calculation
 function handlePercentage() {
   let lastNumMatch = currentInput.match(/(\d+(\.\d+)?)(?!.*\d)/); // Match last number
   if (lastNumMatch) {
@@ -74,4 +73,13 @@ checkbox.addEventListener("change", () => {
   elementsToStyle.buttons.forEach((button) => {
     button.style.color = color;
   });
+});
+
+// Update background gradient to follow the cursor
+document.addEventListener('mousemove', (e) => {
+  const x = e.clientX;
+  const y = e.clientY;
+  
+  // Dynamically set the radial gradient position to follow the cursor
+  document.body.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0), rgba(0,0,0,1))`;
 });

@@ -11,10 +11,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(45deg, #0a0a0a, #3a4452);
+  position: relative;
+  background: radial-gradient(circle at center, rgba(255,255,255,0), rgba(0,0,0,1));
+  transition: background 1s;
 }
+
 .background {
-  border: 1px solid #717377;
+  /* border: 1px solid #717377; */
   border-radius: 20px;
   background-color: black;
   color: white;
